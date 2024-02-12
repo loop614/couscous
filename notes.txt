@@ -1,0 +1,9 @@
+Activity table
+
+Metrics
+    fk_activity
+    metric_value
+    metric_key
+
+GeoPoint
+    fk_activity
