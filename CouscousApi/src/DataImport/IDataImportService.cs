@@ -1,6 +1,6 @@
 namespace CouscousApi.DataImport;
 
-public interface IDataImportFacade
+public interface IDataImportService
 {
     public void ImportExample();
 }

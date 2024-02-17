@@ -6,7 +6,7 @@ namespace CouscousApi.ActivityModule;
 /// <summary>
 /// Entrypoint for Activity Module, which has access to the activity table.
 /// </summary>
-public class ActivityFacade : CouscousFacade, IActivityFacade
+public class ActivityService : CouscousService, IActivityService
 {
     public GarminActivityMetric GetActivity(int idActivity)
     {

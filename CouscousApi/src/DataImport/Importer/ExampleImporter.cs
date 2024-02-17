@@ -6,11 +6,11 @@ namespace CouscousApi.DataImport.Importer;
 
 public class ExampleImporter : IExampleImporter
 {
-    private readonly IActivityFacade _activityFacade;
+    private readonly IActivityService _activityService;
 
-    public ExampleImporter(IActivityFacade activityFacade)
+    public ExampleImporter(IActivityService activityService)
     {
-        _activityFacade = activityFacade;
+        _activityService = activityService;
     }
 
     public void ImportExample()
@@ -24,6 +24,6 @@ public class ExampleImporter : IExampleImporter
             return;
         }
 
-        _activityFacade.SaveActivity(garminActivityMetric);
+        _activityService.SaveActivity(garminActivityMetric);
     }
 }

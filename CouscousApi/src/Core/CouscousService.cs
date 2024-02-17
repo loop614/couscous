@@ -1,8 +1,8 @@
 namespace CouscousApi.Core;
 
 /// <summary>
-/// Couscous Facade Base Class.
+/// Couscous Service Base Class.
 /// </summary>
-public class CouscousFacade
+public class CouscousService
 {
 }

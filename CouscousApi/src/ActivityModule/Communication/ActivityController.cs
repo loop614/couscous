@@ -8,16 +8,16 @@ namespace CouscousApi.ActivityModule.Controller;
 [ApiController]
 public class ActivityController : CoreController
 {
-    private readonly ActivityFacade activityFacade;
+    private readonly ActivityService activityService;
 
-    public ActivityController()
+    public ActivityController(ActivityService activityService)
     {
-        this.activityFacade = new ActivityFacade();
+        this.activityService = new ActivityService();
     }
 
     [HttpGet("{activity_id}")]
     public GarminActivityMetric GetActivity(int activity_id)
     {
-        return this.activityFacade.GetActivity(activity_id);
+        return this.activityService.GetActivity(activity_id);
     }
 }
