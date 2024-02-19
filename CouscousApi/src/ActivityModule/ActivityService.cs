@@ -12,14 +12,24 @@ public class ActivityService : CouscousService, IActivityService
 {
     private readonly IActivityEntityManager _activityEntityManager;
 
-    public ActivityService(IActivityEntityManager activityEntityMangager)
-    {
+    private readonly IActivityRepository _activityRepository;
+
+    public ActivityService(
+        IActivityEntityManager activityEntityMangager,
+        IActivityRepository activityRepository
+    ) {
         this._activityEntityManager = activityEntityMangager;
+        this._activityRepository = activityRepository;
     }
 
-    public GarminActivityMetric GetActivity(int idActivity)
+    public int CountActivities()
     {
-        return new GarminActivityMetric();
+        return this._activityRepository.CountActivities();
+    }
+
+    public ActivityTransfer? GetActivity(int idActivity)
+    {
+        return this._activityRepository.GetActivity(idActivity);
     }
 
     public Activity SaveActivity(GarminActivityMetric garminActivityMetrics)

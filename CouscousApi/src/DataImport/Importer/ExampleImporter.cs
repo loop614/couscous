@@ -15,6 +15,9 @@ public class ExampleImporter : IExampleImporter
 
     public void ImportExample()
     {
+        int activitiesCount = _activityService.CountActivities();
+        if (activitiesCount > 0) { return; }
+
         GarminActivityMetric? garminActivityMetric = JsonConvert.DeserializeObject<GarminActivityMetric>(
             File.ReadAllText(@"./src/DataImport/Example/gamin_activity_metrics.json")
         );

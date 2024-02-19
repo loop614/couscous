@@ -1,5 +1,5 @@
+using CouscousApi.ActivityModule.Model;
 using CouscousApi.Core;
-using CouscousApi.DataImport.Transfer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CouscousApi.ActivityModule.Controller;
@@ -8,16 +8,16 @@ namespace CouscousApi.ActivityModule.Controller;
 [ApiController]
 public class ActivityController : CoreController
 {
-    private readonly ActivityService activityService;
+    private readonly IActivityService _activityService;
 
-    public ActivityController(ActivityService activityService)
+    public ActivityController(IActivityService activityService)
     {
-        this.activityService = activityService;
+        this._activityService = activityService;
     }
 
     [HttpGet("{activity_id}")]
-    public GarminActivityMetric GetActivity(int activity_id)
+    public ActivityTransfer? GetActivity(int activity_id)
     {
-        return this.activityService.GetActivity(activity_id);
+        return this._activityService.GetActivity(activity_id);
     }
 }

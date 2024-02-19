@@ -10,7 +10,9 @@ namespace CouscousApi.ActivityModule;
 /// </summary>
 public interface IActivityService
 {
-    public GarminActivityMetric GetActivity(int idActivity);
+    public int CountActivities();
+
+    public ActivityTransfer? GetActivity(int idActivity);
 
     public Activity SaveActivity(GarminActivityMetric garminActivityMetrics);
 }

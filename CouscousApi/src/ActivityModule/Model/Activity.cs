@@ -7,7 +7,8 @@ namespace CouscousApi.ActivityModule.Model;
 
 public class Activity : CouscousEntity
 {
-    public string ActivityId { get; set; } = String.Empty;
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int ActivityId { get; set; }
 
     public long ExternalActivityId { get; set; }
 
@@ -19,9 +20,9 @@ public class Activity : CouscousEntity
 
     public bool DetailsAvailable { get; set; }
 
-    public List<Metric> Metrics { get; set; } = [];
+    public ICollection<Metric> Metrics { get; set; } = [];
 
-    public List<Geopoint> GeoPoints { get; set; } = [];
+    public ICollection<Geopoint> GeoPoints { get; set; } = [];
 }
 
 public enum ActivityTypeEnum

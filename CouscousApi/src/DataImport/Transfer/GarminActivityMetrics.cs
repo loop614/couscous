@@ -22,7 +22,7 @@ public class GarminActivityMetric
 public class MetricDescriptor
 {
     public int metricsIndex { get; set; }
-    public string? key { get; set; }
+    public string key { get; set; } = String.Empty;
     public Unit unit { get; set; } = new();
 }
 
@@ -34,16 +34,16 @@ public class ActivityDetailMetric
 
 public class GeoPolyline
 {
-    public GeoPoint startPoint { get; set; } = new();
-    public GeoPoint endPoint { get; set; } = new();
+    public GarminGeoPoint startPoint { get; set; } = new();
+    public GarminGeoPoint endPoint { get; set; } = new();
     public double minLat { get; set; }
     public double maxLat { get; set; }
     public double minLon { get; set; }
     public double maxLon { get; set; }
-    public List<GeoPoint> polyline { get; set; } = [];
+    public List<GarminGeoPoint> polyline { get; set; } = [];
 }
 
-public class GeoPoint
+public class GarminGeoPoint
 {
     public double lat { get; set; }
     public double lon { get; set; }

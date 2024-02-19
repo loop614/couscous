@@ -1,17 +1,8 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using CouscousApi.ActivityModule.Model;
-using CouscousApi.Core.Model;
-
 namespace CouscousApi.GeoPointModule.Model;
 
-public class Geopoint : CouscousEntity
+public class GeopointTranfer
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int? GeopointId { get; set; }
-
-    public int? ActivityId { get; set; }
-
-    public Activity? Activity { get; set; } = null!;
 
     public double Latitude { get; set; }
 

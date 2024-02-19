@@ -21,7 +21,10 @@ public class ActivityEntityConfiguration : IEntityTypeConfiguration<Activity>
                 v => v.ToString(),
                 v => (ActivityTypeEnum)Enum.Parse(typeof(ActivityTypeEnum), v));
 
-        builder.HasMany(e => e.Metrics);
-        builder.HasMany(e => e.GeoPoints);
+        builder
+            .HasMany(e => e.Metrics);
+
+        builder
+            .HasMany(e => e.GeoPoints);
     }
 }
