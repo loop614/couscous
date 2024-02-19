@@ -17,6 +17,7 @@ public class ActivityEntityManager : CouscousEntityManager, IActivityEntityManag
 
     public Activity SaveActivity(GarminActivityMetric garminActivityMetrics)
     {
+        var transaction = this._couscousContext.Database.BeginTransaction();
         Activity activity = MapGarminActivityMetricToActivity(new Activity(), garminActivityMetrics);
         this._couscousContext.Activities.Add(activity);
         this._couscousContext.SaveChanges();
@@ -24,6 +25,7 @@ public class ActivityEntityManager : CouscousEntityManager, IActivityEntityManag
         AddGeopoints(activity, garminActivityMetrics);
         this._couscousContext.Activities.Update(activity);
         this._couscousContext.SaveChanges();
+        transaction.Commit();
 
         return activity;
     }
