@@ -1,5 +1,7 @@
 using CouscousApi.Core;
 using CouscousApi.DataImport.Transfer;
+using CouscousApi.ActivityModule.Persistence;
+using CouscousApi.ActivityModule.Model;
 
 namespace CouscousApi.ActivityModule;
 
@@ -10,5 +12,5 @@ public interface IActivityService
 {
     public GarminActivityMetric GetActivity(int idActivity);
 
-    public GarminActivityMetric SaveActivity(GarminActivityMetric garminActivityMetrics);
+    public Activity SaveActivity(GarminActivityMetric garminActivityMetrics);
 }

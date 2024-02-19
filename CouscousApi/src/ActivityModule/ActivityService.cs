@@ -1,5 +1,7 @@
 using CouscousApi.Core;
 using CouscousApi.DataImport.Transfer;
+using CouscousApi.ActivityModule.Persistence;
+using CouscousApi.ActivityModule.Model;
 
 namespace CouscousApi.ActivityModule;
 
@@ -8,13 +10,20 @@ namespace CouscousApi.ActivityModule;
 /// </summary>
 public class ActivityService : CouscousService, IActivityService
 {
+    private readonly IActivityEntityManager _activityEntityManager;
+
+    public ActivityService(IActivityEntityManager activityEntityMangager)
+    {
+        this._activityEntityManager = activityEntityMangager;
+    }
+
     public GarminActivityMetric GetActivity(int idActivity)
     {
         return new GarminActivityMetric();
     }
 
-    public GarminActivityMetric SaveActivity(GarminActivityMetric garminActivityMetrics)
+    public Activity SaveActivity(GarminActivityMetric garminActivityMetrics)
     {
-        return new GarminActivityMetric();
+        return this._activityEntityManager.SaveActivity(garminActivityMetrics);
     }
 }

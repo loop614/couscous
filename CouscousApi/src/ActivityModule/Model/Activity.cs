@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using CouscousApi.Core.Model;
 using CouscousApi.GeoPointModule.Model;
 using CouscousApi.MetricModule.Model;
@@ -6,7 +7,7 @@ namespace CouscousApi.ActivityModule.Model;
 
 public class Activity : CouscousEntity
 {
-    public required string ActivityId { get; set; }
+    public string ActivityId { get; set; } = String.Empty;
 
     public long ExternalActivityId { get; set; }
 

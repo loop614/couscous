@@ -3,15 +3,20 @@ using CouscousApi.DataImport;
 namespace CouscousApi.Core.Domain;
 
 public class CouscousStartupService : IHostedService {
-    private IDataImportService _dataimportService;
-    public CouscousStartupService(IDataImportService dataimportService)
+    private readonly IServiceScopeFactory scopeFactory;
+
+    public CouscousStartupService(IServiceScopeFactory scopeFactory)
     {
-        this._dataimportService = dataimportService;
+        this.scopeFactory = scopeFactory;
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        this._dataimportService.ImportExample();
+        using (var scope = scopeFactory.CreateScope())
+        {
+            var dataImportService = scope.ServiceProvider.GetRequiredService<IDataImportService>();
+            dataImportService.ImportExample();
+        }
 
         return Task.CompletedTask;
     }

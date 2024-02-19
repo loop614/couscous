@@ -12,7 +12,7 @@ public class ActivityController : CoreController
 
     public ActivityController(ActivityService activityService)
     {
-        this.activityService = new ActivityService();
+        this.activityService = activityService;
     }
 
     [HttpGet("{activity_id}")]
