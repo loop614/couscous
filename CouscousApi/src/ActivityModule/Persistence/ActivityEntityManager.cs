@@ -43,8 +43,10 @@ public class ActivityEntityManager : CouscousEntityManager, IActivityEntityManag
 
     private static void AddGeopoints(Activity activity, GarminActivityMetric garminActivityMetrics)
     {
+        int count = 0;
         foreach (GarminGeoPoint gp in garminActivityMetrics.geoPolylineDTO.polyline)
         {
+            if (count++ > 50) {break;}
             Geopoint geoPoint = new()
             {
                 Activity = activity,
@@ -77,21 +79,10 @@ public class ActivityEntityManager : CouscousEntityManager, IActivityEntityManag
             }
         }
 
+        int count = 0;
         foreach (ActivityDetailMetric md in garminActivityMetrics.activityDetailMetrics)
         {
-            for (int i = 0; i < md.metrics.Count; i++)
-            {
-                Metric metric = new()
-                {
-                    MetricKey = metricKeys[i],
-                    MetricValue = md.metrics[i]
-                };
-                activity.Metrics.Add(metric);
-            }
-        }
-
-        foreach (ActivityDetailMetric md in garminActivityMetrics.activityDetailMetrics)
-        {
+            if (count++ > (50 / md.metrics.Count)) {break;}
             for (int i = 0; i < md.metrics.Count; i++)
             {
                 Metric metric = new()

@@ -4,7 +4,8 @@
 
 ## Notes
 - work in progress
-- try graph databases !
+- try graph databases or ElasticSearch
+- remove the limiter in ActivityEntityManager.cs
 
 ## Requirements
 - docker with compose

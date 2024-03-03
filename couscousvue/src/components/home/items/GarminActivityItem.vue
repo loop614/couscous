@@ -1,4 +1,6 @@
 <script setup lang="ts">
+    import { Ref, ref } from 'vue';
+
     type ActivityMetrics = {
         metricId: number;
         metricValue: number;
@@ -33,47 +35,29 @@
         geoPoints: ActivityGeoPoints[];
     }
 
-    let loading: boolean = true;
-    let error: boolean = false;
-    let success: boolean = false;
-    let activityData = {} as Activity;
+    let loading: Ref<boolean> = ref(true);
+    let error: Ref<boolean> = ref(false);
+    let success: Ref<boolean> = ref(false);
+    let activityData: Ref<Activity | null> = ref<Activity | null>(null);
 
-    fetch(`http://localhost:5184/activity/2`)
+    fetch(`http://localhost:5184/activity/1`)
         .then(res => res.json())
         .then((res: Activity) => {
             console.log(res);
-            activityData = res;
-            loading = false;
-            success = true;
-
-            // until hmr comes alive
-            let activityDataContainer: Element | null = document.querySelector("#activityData");
-            activityDataContainer!.style.display = "";
-            activityDataContainer!.querySelector(".activityDataId")!.innerHTML = activityData.activityId.toString();
-            activityDataContainer!.querySelector(".externalActivityId")!.innerHTML = activityData.externalActivityId.toString();
-            activityDataContainer!.querySelector(".activityType")!.innerHTML = activityData.activityType;
-            activityDataContainer!.querySelector(".measurementCount")!.innerHTML = activityData.measurementCount.toString();
-            activityDataContainer!.querySelector(".detailsAvailable")!.innerHTML = activityData.detailsAvailable.toString();
+            activityData.value = res;
+            loading.value = false;
+            success.value = true;
         })
         .catch((e) => {
             console.log(e)
-            loading = false;
-            error = true;
+            loading.value = false;
+            error.value = true;
         });
 
 </script>
 
 <template>
-    <!-- <div v-if="loading">Loading...</div>
+    <div v-if="loading">Loading...</div>
     <div v-if="error">Something has gone wrong !</div>
-    <div v-if="success">{{ activityData }}</div> -->
-
-    <div id="activityData" style="display:none;">
-        <p>activityDataId</p><div class="activityDataId"></div>
-        <p>externalActivityId</p><div class="externalActivityId"></div>
-        <p>activityType</p><div class="activityType"></div>
-        <p>measurementCount</p><div class="measurementCount"></div>
-        <p>metricsCount</p><div class="metricsCount"></div>
-        <p>detailsAvailable</p><div class="detailsAvailable"></div>
-    </div>
+    <div v-if="success">{{ activityData }}</div>
 </template>
