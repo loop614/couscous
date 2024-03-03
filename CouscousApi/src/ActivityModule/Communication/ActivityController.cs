@@ -18,6 +18,7 @@ public class ActivityController : CoreController
     [HttpGet("{activity_id}")]
     public ActivityTransfer? GetActivity(int activity_id)
     {
+        Console.WriteLine("Getting activity " + activity_id.ToString());
         return this._activityService.GetActivity(activity_id);
     }
 }

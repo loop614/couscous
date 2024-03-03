@@ -17,3 +17,8 @@
 - dotnet ef migrations add First && dotnet ef database update
 - dotnet run
 - [open](http://localhost:5184/activity/1)
+
+## Frontend
+- cd couscousvue
+- npm install
+- npm run dev
