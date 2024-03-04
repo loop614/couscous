@@ -12,7 +12,7 @@ public class CouscousStartupService : IHostedService {
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        using (var scope = scopeFactory.CreateScope())
+        using (var scope = this.scopeFactory.CreateScope())
         {
             var dataImportService = scope.ServiceProvider.GetRequiredService<IDataImportService>();
             dataImportService.ImportExample();

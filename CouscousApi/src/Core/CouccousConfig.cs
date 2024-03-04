@@ -1,5 +1,6 @@
 using CouscousApi.ActivityModule;
 using CouscousApi.Core.Domain;
+using CouscousApi.EventModule;
 
 namespace CouscousApi.Core;
 
@@ -9,7 +10,6 @@ public static class CouscousConfig
     {
         DataImportConfig.AddBuilderServices(builder);
         ActivityConfig.AddBuilderServices(builder);
-
-        builder.Services.AddHostedService<CouscousStartupService>();
+        EventConfig.AddBuilderServices(builder);
     }
 }

@@ -1,4 +1,4 @@
-using CouscousApi.ActivityModule.Model;
+using CouscousApi.ActivityModule.Transfer;
 
 namespace CouscousApi.ActivityModule.Persistence;
 

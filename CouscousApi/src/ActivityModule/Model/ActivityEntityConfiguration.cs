@@ -26,5 +26,8 @@ public class ActivityEntityConfiguration : IEntityTypeConfiguration<Activity>
 
         builder
             .HasMany(e => e.GeoPoints);
+
+        builder
+            .HasMany(e => e.Events);
     }
 }

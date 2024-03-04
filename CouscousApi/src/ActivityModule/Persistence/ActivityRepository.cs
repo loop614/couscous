@@ -1,4 +1,5 @@
 using CouscousApi.ActivityModule.Model;
+using CouscousApi.ActivityModule.Transfer;
 using CouscousApi.Core.Persistence;
 using CouscousApi.GeoPointModule.Model;
 using CouscousApi.MetricModule.Model;
@@ -29,10 +30,12 @@ public class ActivityRepository : CouscousRepository, IActivityRepository
             .AsSplitQuery()
             .SingleOrDefault(activity => activity.ActivityId == idActivity);
 
+        if (activity == null) { return null; }
+
         return this.MapActivityToTranfer(activity, new ActivityTransfer());
     }
 
-    private ActivityTransfer? MapActivityToTranfer(Activity? activity, ActivityTransfer activityTransfer)
+    private ActivityTransfer MapActivityToTranfer(Activity? activity, ActivityTransfer activityTransfer)
     {
         if (activity == null) { return activityTransfer; }
         activityTransfer.ActivityId = activity.ActivityId;

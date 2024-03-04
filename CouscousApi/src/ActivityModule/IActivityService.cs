@@ -1,7 +1,6 @@
-using CouscousApi.Core;
 using CouscousApi.DataImport.Transfer;
-using CouscousApi.ActivityModule.Persistence;
 using CouscousApi.ActivityModule.Model;
+using CouscousApi.ActivityModule.Transfer;
 
 namespace CouscousApi.ActivityModule;
 

@@ -50,6 +50,7 @@ public class ActivityEntityManager : CouscousEntityManager, IActivityEntityManag
             Geopoint geoPoint = new()
             {
                 Activity = activity,
+                ActivityId = activity.ActivityId,
                 Latitude = gp.lat,
                 Longitude = gp.lon,
                 Altitude = gp.altitude,
@@ -82,12 +83,13 @@ public class ActivityEntityManager : CouscousEntityManager, IActivityEntityManag
         int count = 0;
         foreach (ActivityDetailMetric md in garminActivityMetrics.activityDetailMetrics)
         {
-            if (count++ > (50 / md.metrics.Count)) {break;}
+            if (count++ > (50 / md.metrics.Count) + 1) {break;}
             for (int i = 0; i < md.metrics.Count; i++)
             {
                 Metric metric = new()
                 {
                     Activity = activity,
+                    ActivityId = activity.ActivityId,
                     MetricKey = metricKeys[i],
                     MetricValue = md.metrics[i]
                 };

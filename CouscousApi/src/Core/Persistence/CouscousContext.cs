@@ -1,5 +1,6 @@
 using CouscousApi.ActivityModule.Model;
 using CouscousApi.Core.Transfer;
+using CouscousApi.EventModule.Model;
 using CouscousApi.GeoPointModule.Model;
 using CouscousApi.MetricModule.Model;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ public class CouscousContext : DbContext
     public DbSet<Geopoint> GeoPoints { get; set; }
 
     public DbSet<Metric> Metrics { get; set; }
+
+    public DbSet<Event> Events { get; set; }
 
     public string DbPath { get; }
 
@@ -30,5 +33,6 @@ public class CouscousContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         new ActivityEntityConfiguration().Configure(modelBuilder.Entity<Activity>());
+        new EventEntityConfiguration().Configure(modelBuilder.Entity<Event>());
     }
 }

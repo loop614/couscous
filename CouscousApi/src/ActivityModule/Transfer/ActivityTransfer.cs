@@ -1,7 +1,7 @@
 using CouscousApi.GeoPointModule.Model;
 using CouscousApi.MetricModule.Model;
 
-namespace CouscousApi.ActivityModule.Model;
+namespace CouscousApi.ActivityModule.Transfer;
 
 public class ActivityTransfer
 {

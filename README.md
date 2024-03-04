@@ -5,7 +5,7 @@
 ## Notes
 - work in progress
 - try graph databases or ElasticSearch
-- remove the limiter in ActivityEntityManager.cs
+- remove limiters in ActivityEntityManager.cs, EventEntityManager.cs
 
 ## Requirements
 - docker with compose
@@ -17,7 +17,8 @@
 - cd CouscousApi
 - dotnet ef migrations add First && dotnet ef database update
 - dotnet run
-- [open](http://localhost:5184/activity/1)
+- [endpoint1](http://localhost:5184/activity/1)
+- [endpoint2](http://localhost:5184/events/activity/1)
 
 ## Frontend
 - cd couscousvue

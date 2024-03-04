@@ -22,7 +22,7 @@ public class GarminActivityMetric
 public class MetricDescriptor
 {
     public int metricsIndex { get; set; }
-    public string key { get; set; } = String.Empty;
+    public required string key { get; set; }
     public Unit unit { get; set; } = new();
 }
 
