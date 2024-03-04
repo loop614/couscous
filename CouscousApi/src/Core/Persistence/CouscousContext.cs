@@ -17,18 +17,18 @@ public class CouscousContext : DbContext
 
     public DbSet<Event> Events { get; set; }
 
-    public string DbPath { get; }
+    public string DbPath { get; set; }
 
     public CouscousContext(IConfiguration config)
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
         var settingsSql = config.GetSection("Sql").Get<CouscousSqlSettings>();
-        this.DbPath = settingsSql?.ConnectionString ?? string.Empty;
+        DbPath = settingsSql?.ConnectionString ?? string.Empty;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(this.DbPath);
+        => optionsBuilder.UseNpgsql(DbPath);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

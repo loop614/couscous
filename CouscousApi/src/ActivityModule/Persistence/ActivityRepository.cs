@@ -7,23 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CouscousApi.ActivityModule.Persistence;
 
-public class ActivityRepository : CouscousRepository, IActivityRepository
+public class ActivityRepository(CouscousContext couscousContext) : CouscousRepository, IActivityRepository
 {
-    private CouscousContext _couscousContext;
-
-    public ActivityRepository(CouscousContext couscousContext)
-    {
-        this._couscousContext = couscousContext;
-    }
-
     public int CountActivities()
     {
-        return this._couscousContext.Activities.Count();
+        return couscousContext.Activities.Count();
     }
 
     public ActivityTransfer? GetActivity(int idActivity)
     {
-        Activity? activity = this._couscousContext.Activities
+        Activity? activity = couscousContext.Activities
             .Include(activity => activity.Metrics)
             .AsSplitQuery()
             .Include(activity => activity.GeoPoints)
@@ -32,10 +25,10 @@ public class ActivityRepository : CouscousRepository, IActivityRepository
 
         if (activity == null) { return null; }
 
-        return this.MapActivityToTranfer(activity, new ActivityTransfer());
+        return MapActivityToTranfer(activity, new ActivityTransfer());
     }
 
-    private ActivityTransfer MapActivityToTranfer(Activity? activity, ActivityTransfer activityTransfer)
+    private static ActivityTransfer MapActivityToTranfer(Activity? activity, ActivityTransfer activityTransfer)
     {
         if (activity == null) { return activityTransfer; }
         activityTransfer.ActivityId = activity.ActivityId;
@@ -47,18 +40,18 @@ public class ActivityRepository : CouscousRepository, IActivityRepository
 
         foreach (var metric in activity.Metrics)
         {
-            activityTransfer.Metrics.Add(this.MapMetricToTransfer(metric, new MetricTransfer()));
+            activityTransfer.Metrics.Add(MapMetricToTransfer(metric, new MetricTransfer()));
         }
 
         foreach (var geoPoint in activity.GeoPoints)
         {
-            activityTransfer.GeoPoints.Add(this.MapGeoPointToTransfer(geoPoint, new GeopointTranfer()));
+            activityTransfer.GeoPoints.Add(MapGeoPointToTransfer(geoPoint, new GeopointTranfer()));
         }
 
         return activityTransfer;
     }
 
-    private GeopointTranfer MapGeoPointToTransfer(Geopoint geoPoint, GeopointTranfer geopointTranfer)
+    private static GeopointTranfer MapGeoPointToTransfer(Geopoint geoPoint, GeopointTranfer geopointTranfer)
     {
         geopointTranfer.GeopointId = geoPoint.GeopointId;
         geopointTranfer.Latitude = geoPoint.Latitude;
@@ -78,7 +71,7 @@ public class ActivityRepository : CouscousRepository, IActivityRepository
         return geopointTranfer;
     }
 
-    private MetricTransfer MapMetricToTransfer(Metric metric, MetricTransfer metricTransfer)
+    private static MetricTransfer MapMetricToTransfer(Metric metric, MetricTransfer metricTransfer)
     {
         metricTransfer.MetricId = metric.MetricId;
         metricTransfer.MetricKey = metric.MetricKey;

@@ -6,25 +6,18 @@ using CouscousApi.MetricModule.Model;
 
 namespace CouscousApi.ActivityModule.Persistence;
 
-public class ActivityEntityManager : CouscousEntityManager, IActivityEntityManager
+public class ActivityEntityManager(CouscousContext couscousContext) : CouscousEntityManager, IActivityEntityManager
 {
-    private CouscousContext _couscousContext;
-
-    public ActivityEntityManager(CouscousContext couscousContext)
-    {
-        this._couscousContext = couscousContext;
-    }
-
     public Activity SaveActivity(GarminActivityMetric garminActivityMetrics)
     {
-        var transaction = this._couscousContext.Database.BeginTransaction();
+        var transaction = couscousContext.Database.BeginTransaction();
         Activity activity = MapGarminActivityMetricToActivity(new Activity(), garminActivityMetrics);
-        this._couscousContext.Activities.Add(activity);
-        this._couscousContext.SaveChanges();
+        couscousContext.Activities.Add(activity);
+        couscousContext.SaveChanges();
         AddMetrics(activity, garminActivityMetrics);
         AddGeopoints(activity, garminActivityMetrics);
-        this._couscousContext.Activities.Update(activity);
-        this._couscousContext.SaveChanges();
+        couscousContext.Activities.Update(activity);
+        couscousContext.SaveChanges();
         transaction.Commit();
 
         return activity;

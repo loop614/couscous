@@ -4,30 +4,23 @@ using CouscousApi.EventModule.Model;
 
 namespace CouscousApi.EventModule.Persistence;
 
-public class EventRepository : CouscousRepository, IEventRepository
+public class EventRepository(CouscousContext couscousContext) : CouscousRepository, IEventRepository
 {
-    private CouscousContext _couscousContext;
-
-    public EventRepository(CouscousContext couscousContext)
-    {
-        this._couscousContext = couscousContext;
-    }
-
     public int CountEvents()
     {
-        return this._couscousContext.Activities.Count();
+        return couscousContext.Activities.Count();
     }
 
     public List<EventTransfer> GetEvents(int idActivity)
     {
-        List<Event> events = this._couscousContext.Events
+        List<Event> events = couscousContext.Events
             .Where(s => s.ActivityId == idActivity)
             .ToList();
 
-        return this.MapEventsToTransfer(events, new List<EventTransfer>());
+        return MapEventsToTransfer(events, new List<EventTransfer>());
     }
 
-    private List<EventTransfer> MapEventsToTransfer(List<Event> events, List<EventTransfer> eventsResponseTransfer)
+    private static List<EventTransfer> MapEventsToTransfer(List<Event> events, List<EventTransfer> eventsResponseTransfer)
     {
         if (events.Count == 0) { return eventsResponseTransfer; }
         foreach (Event eventEntity in events)

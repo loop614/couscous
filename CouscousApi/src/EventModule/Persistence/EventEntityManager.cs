@@ -5,18 +5,11 @@ using CouscousApi.EventModule.Model;
 
 namespace CouscousApi.EventModule.Persistence;
 
-public class EventEntityManager : CouscousEntityManager, IEventEntityManager
+public class EventEntityManager(CouscousContext couscousContext) : CouscousEntityManager, IEventEntityManager
 {
-    private CouscousContext _couscousContext;
-
-    public EventEntityManager(CouscousContext couscousContext)
-    {
-        this._couscousContext = couscousContext;
-    }
-
     public List<Event> SaveEvents(Activity activity, GarminActivityMetric garminActivityMetrics)
     {
-        var transaction = this._couscousContext.Database.BeginTransaction();
+        var transaction = couscousContext.Database.BeginTransaction();
         Dictionary<string, int> metricKeys = MapMetricKeys(garminActivityMetrics);
         int polylinesPerMetric = (int)garminActivityMetrics.activityDetailMetrics.Count / garminActivityMetrics.geoPolylineDTO.polyline.Count;
         int eventCount = 0;
@@ -28,15 +21,15 @@ public class EventEntityManager : CouscousEntityManager, IEventEntityManager
                 Event eventEntity = new() { ActivityId = activity.ActivityId };
                 HydrateEventEntityWithPolyline(eventEntity, garminActivityMetrics.geoPolylineDTO.polyline[i]);
                 HydrateEventEntityWithMetrics(eventEntity, garminActivityMetrics.activityDetailMetrics[eventCount].metrics, metricKeys);
-                this._couscousContext.Events.Add(eventEntity);
+                couscousContext.Events.Add(eventEntity);
                 eventCount++;
                 if (eventCount > garminActivityMetrics.activityDetailMetrics.Count) { eventCount = garminActivityMetrics.activityDetailMetrics.Count; }
             }
             if (eventCount > 50) break;
         }
 
-        this._couscousContext.SaveChanges();
-        var events = this._couscousContext.Events.ToList();
+        couscousContext.SaveChanges();
+        var events = couscousContext.Events.ToList();
         transaction.Commit();
 
         return events;

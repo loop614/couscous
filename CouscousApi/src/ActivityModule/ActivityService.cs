@@ -9,32 +9,23 @@ namespace CouscousApi.ActivityModule;
 /// <summary>
 /// Entrypoint for Activity Module, which has access to the activity table.
 /// </summary>
-public class ActivityService : CouscousService, IActivityService
+public class ActivityService(
+    IActivityEntityManager activityEntityManager,
+    IActivityRepository activityRepository
+    ) : CouscousService, IActivityService
 {
-    private readonly IActivityEntityManager _activityEntityManager;
-
-    private readonly IActivityRepository _activityRepository;
-
-    public ActivityService(
-        IActivityEntityManager activityEntityMangager,
-        IActivityRepository activityRepository
-    ) {
-        this._activityEntityManager = activityEntityMangager;
-        this._activityRepository = activityRepository;
-    }
-
     public int CountActivities()
     {
-        return this._activityRepository.CountActivities();
+        return activityRepository.CountActivities();
     }
 
     public ActivityTransfer? GetActivity(int idActivity)
     {
-        return this._activityRepository.GetActivity(idActivity);
+        return activityRepository.GetActivity(idActivity);
     }
 
     public Activity SaveActivity(GarminActivityMetric garminActivityMetrics)
     {
-        return this._activityEntityManager.SaveActivity(garminActivityMetrics);
+        return activityEntityManager.SaveActivity(garminActivityMetrics);
     }
 }
