@@ -22,12 +22,9 @@ public class ActivityEntityConfiguration : IEntityTypeConfiguration<Activity>
                 v => (ActivityTypeEnum)Enum.Parse(typeof(ActivityTypeEnum), v));
 
         builder
-            .HasMany(e => e.Metrics);
-
-        builder
-            .HasMany(e => e.GeoPoints);
-
-        builder
-            .HasMany(e => e.Events);
+            .HasMany(e => e.Events)
+            .WithOne()
+            .HasForeignKey(e => e.ActivityId)
+            .IsRequired(false);
     }
 }

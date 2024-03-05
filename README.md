@@ -1,5 +1,5 @@
 ## Description
-- imports a [file](https://github.com/loop614/couscous/blob/main/CouscousApi/src/DataImport/Example/gamin_activity_metrics.json) made by Garmin Forerunner 255 smart watch
+- imports a [file](https://github.com/loop614/couscous/blob/main/CouscousApi/src/DataImport/Example/gamin_activity_metrics.json) taken from Garmin Connect endpoint
 - exposes data to api
 
 ## Notes
@@ -24,3 +24,4 @@
 - cd couscousvue
 - npm install
 - npm run dev
+- [open](http://localhost:5173/)

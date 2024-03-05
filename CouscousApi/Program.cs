@@ -12,7 +12,7 @@ builder.Services.AddDbContext<CouscousContext>(
 );
 
 builder.Services.AddCors(options => {
-    options.AddPolicy(name: CouscousAllowSpecificOrigins, policy => { policy.WithOrigins("http://localhost").AllowAnyMethod() ;});
+    options.AddPolicy(name: CouscousAllowSpecificOrigins, policy => { policy.WithOrigins("http://localhost:5173").AllowAnyMethod() ;});
 });
 
 CouscousConfig.AddBuilderServices(builder);

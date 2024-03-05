@@ -1,25 +1,11 @@
 using CouscousApi.ActivityModule;
-using CouscousApi.ActivityModule.Model;
 using CouscousApi.DataImport.Transfer;
-using CouscousApi.EventModule;
 using Newtonsoft.Json;
 
 namespace CouscousApi.DataImport.Importer;
 
-public class ExampleImporter : IExampleImporter
+public class ExampleImporter(IActivityService activityService) : IExampleImporter
 {
-    private readonly IActivityService _activityService;
-
-    private readonly IEventService _eventService;
-
-    public ExampleImporter(
-        IActivityService activityService,
-        IEventService eventService
-    ) {
-        _activityService = activityService;
-        _eventService = eventService;
-    }
-
     public void ImportExample()
     {
         GarminActivityMetric? garminActivityMetric = JsonConvert.DeserializeObject<GarminActivityMetric>(
@@ -31,9 +17,8 @@ public class ExampleImporter : IExampleImporter
             return;
         }
 
-        if (_activityService.CountActivities() == 0) {
-            Activity activity = _activityService.SaveActivity(garminActivityMetric);
-            _eventService.SaveEvents(activity, garminActivityMetric);
+        if (activityService.CountActivities() == 0) {
+            activityService.SaveActivity(garminActivityMetric);
         }
     }
 }

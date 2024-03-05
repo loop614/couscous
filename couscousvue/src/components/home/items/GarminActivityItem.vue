@@ -1,28 +1,5 @@
 <script setup lang="ts">
-    import { Ref, ref } from 'vue';
-
-    type ActivityMetrics = {
-        metricId: number;
-        metricValue: number;
-        metricKey: string;
-    }
-
-    type ActivityGeoPoints = {
-        geopointId: number;
-        Latitude: number;
-        Longitude: number;
-        altitude: number;
-        timestampPoint: number;
-        timerStart: boolean;
-        timerStop: boolean;
-        distanceFromPreviousPoint: number;
-        distanceInMeters: number;
-        speed: number;
-        cumulativeAscent: number;
-        cumulativeDescent: number;
-        extendedCoordinate: boolean;
-        valid: boolean;
-    }
+    import { type Ref, ref } from 'vue';
 
     type Activity = {
         activityId: number;
@@ -31,8 +8,8 @@
         measurementCount: number;
         metricsCount: number;
         detailsAvailable: boolean;
-        metrics: ActivityMetrics[];
-        geoPoints: ActivityGeoPoints[];
+        events: any[];
+        // TODO type Event
     }
 
     let loading: Ref<boolean> = ref(true);

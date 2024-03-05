@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using CouscousApi.Core.Model;
 using CouscousApi.EventModule.Model;
-using CouscousApi.GeoPointModule.Model;
-using CouscousApi.MetricModule.Model;
 
 namespace CouscousApi.ActivityModule.Model;
 
@@ -20,10 +18,6 @@ public class Activity : CouscousEntity
     public int MetricsCount { get; set; }
 
     public bool DetailsAvailable { get; set; }
-
-    public ICollection<Metric> Metrics { get; set; } = [];
-
-    public ICollection<Geopoint> GeoPoints { get; set; } = [];
 
     public ICollection<Event> Events { get; set; } = [];
 }

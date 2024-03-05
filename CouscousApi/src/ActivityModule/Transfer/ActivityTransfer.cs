@@ -1,5 +1,4 @@
-using CouscousApi.GeoPointModule.Model;
-using CouscousApi.MetricModule.Model;
+using CouscousApi.DataImport.Transfer;
 
 namespace CouscousApi.ActivityModule.Transfer;
 
@@ -17,7 +16,5 @@ public class ActivityTransfer
 
     public bool DetailsAvailable { get; set; }
 
-    public ICollection<MetricTransfer> Metrics { get; set; } = [];
-
-    public ICollection<GeopointTranfer> GeoPoints { get; set; } = [];
+    public ICollection<EventTransfer> Events { get; set; } = [];
 }

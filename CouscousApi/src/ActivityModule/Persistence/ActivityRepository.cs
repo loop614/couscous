@@ -1,8 +1,8 @@
 using CouscousApi.ActivityModule.Model;
 using CouscousApi.ActivityModule.Transfer;
 using CouscousApi.Core.Persistence;
-using CouscousApi.GeoPointModule.Model;
-using CouscousApi.MetricModule.Model;
+using CouscousApi.DataImport.Transfer;
+using CouscousApi.EventModule.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace CouscousApi.ActivityModule.Persistence;
@@ -17,9 +17,7 @@ public class ActivityRepository(CouscousContext couscousContext) : CouscousRepos
     public ActivityTransfer? GetActivity(int idActivity)
     {
         Activity? activity = couscousContext.Activities
-            .Include(activity => activity.Metrics)
-            .AsSplitQuery()
-            .Include(activity => activity.GeoPoints)
+            .Include(activity => activity.Events)
             .AsSplitQuery()
             .SingleOrDefault(activity => activity.ActivityId == idActivity);
 
@@ -28,9 +26,8 @@ public class ActivityRepository(CouscousContext couscousContext) : CouscousRepos
         return MapActivityToTranfer(activity, new ActivityTransfer());
     }
 
-    private static ActivityTransfer MapActivityToTranfer(Activity? activity, ActivityTransfer activityTransfer)
+    private static ActivityTransfer MapActivityToTranfer(Activity activity, ActivityTransfer activityTransfer)
     {
-        if (activity == null) { return activityTransfer; }
         activityTransfer.ActivityId = activity.ActivityId;
         activityTransfer.ExternalActivityId = activity.ExternalActivityId;
         activityTransfer.ActivityType = activity.ActivityType.ToString();
@@ -38,45 +35,54 @@ public class ActivityRepository(CouscousContext couscousContext) : CouscousRepos
         activityTransfer.MetricsCount = activity.MetricsCount;
         activityTransfer.DetailsAvailable = activity.DetailsAvailable;
 
-        foreach (var metric in activity.Metrics)
-        {
-            activityTransfer.Metrics.Add(MapMetricToTransfer(metric, new MetricTransfer()));
-        }
-
-        foreach (var geoPoint in activity.GeoPoints)
-        {
-            activityTransfer.GeoPoints.Add(MapGeoPointToTransfer(geoPoint, new GeopointTranfer()));
+        foreach(Event eventEntity in activity.Events) {
+            activityTransfer.Events.Add(
+                MapEventToTransfer(eventEntity, new EventTransfer())
+            );
         }
 
         return activityTransfer;
     }
 
-    private static GeopointTranfer MapGeoPointToTransfer(Geopoint geoPoint, GeopointTranfer geopointTranfer)
+    private static EventTransfer MapEventToTransfer(Event eventEntity, EventTransfer eventTransfer)
     {
-        geopointTranfer.GeopointId = geoPoint.GeopointId;
-        geopointTranfer.Latitude = geoPoint.Latitude;
-        geopointTranfer.Longitude = geoPoint.Longitude;
-        geopointTranfer.Altitude = geoPoint.Altitude;
-        geopointTranfer.TimestampPoint = geoPoint.TimestampPoint;
-        geopointTranfer.TimerStart = geoPoint.TimerStart;
-        geopointTranfer.TimerStop = geoPoint.TimerStop;
-        geopointTranfer.DistanceFromPreviousPoint = geoPoint.DistanceFromPreviousPoint;
-        geopointTranfer.DistanceInMeters = geoPoint.DistanceInMeters;
-        geopointTranfer.Speed = geoPoint.Speed;
-        geopointTranfer.CumulativeAscent = geoPoint.CumulativeAscent;
-        geopointTranfer.CumulativeDescent = geoPoint.CumulativeDescent;
-        geopointTranfer.ExtendedCoordinate = geoPoint.ExtendedCoordinate;
-        geopointTranfer.Valid = geoPoint.Valid;
+        eventTransfer.DirectRunCadence = eventEntity.DirectRunCadence;
+        eventTransfer.DirectFractionalCadence = eventEntity.DirectFractionalCadence;
+        eventTransfer.DirectPower = eventEntity.DirectPower;
+        eventTransfer.SumMovingDuration = eventEntity.SumMovingDuration;
+        eventTransfer.DirectElevation = eventEntity.DirectElevation;
+        eventTransfer.SumDistance = eventEntity.SumDistance;
+        eventTransfer.DirectBodyBattery = eventEntity.DirectBodyBattery;
+        eventTransfer.DirectSpeed = eventEntity.DirectSpeed;
+        eventTransfer.DirectTimestamp = eventEntity.DirectTimestamp;
+        eventTransfer.DirectHeartRate = eventEntity.DirectHeartRate;
+        eventTransfer.SumDuration = eventEntity.SumDuration;
+        eventTransfer.DirectVerticalSpeed = eventEntity.DirectVerticalSpeed;
+        eventTransfer.DirectCorrectedElevation = eventEntity.DirectCorrectedElevation;
+        eventTransfer.DirectUncorrectedElevation = eventEntity.DirectUncorrectedElevation;
+        eventTransfer.DirectLatitude = eventEntity.DirectLatitude;
+        eventTransfer.DirectLongitude = eventEntity.DirectLongitude;
+        eventTransfer.DirectGradeAdjustedSpeed = eventEntity.DirectGradeAdjustedSpeed;
+        eventTransfer.SumAccumulatedPower = eventEntity.SumAccumulatedPower;
+        eventTransfer.DirectGroundContactTime = eventEntity.DirectGroundContactTime;
+        eventTransfer.DirectVerticalOscillation = eventEntity.DirectVerticalOscillation;
+        eventTransfer.DirectStrideLength = eventEntity.DirectStrideLength;
+        eventTransfer.DirectVerticalRatio = eventEntity.DirectVerticalRatio;
+        eventTransfer.DirectPerformanceCondition = eventEntity.DirectPerformanceCondition;
+        eventTransfer.Latitude = eventEntity.Latitude;
+        eventTransfer.Longitude = eventEntity.Longitude;
+        eventTransfer.Altitude = eventEntity.Altitude;
+        eventTransfer.TimestampPoint = eventEntity.TimestampPoint;
+        eventTransfer.TimerStart = eventEntity.TimerStart;
+        eventTransfer.TimerStop = eventEntity.TimerStop;
+        eventTransfer.DistanceFromPreviousPoint = eventEntity.DistanceFromPreviousPoint;
+        eventTransfer.DistanceInMeters = eventEntity.DistanceInMeters;
+        eventTransfer.Speed = eventEntity.Speed;
+        eventTransfer.CumulativeAscent = eventEntity.CumulativeAscent;
+        eventTransfer.CumulativeDescent = eventEntity.CumulativeDescent;
+        eventTransfer.ExtendedCoordinate = eventEntity.ExtendedCoordinate;
+        eventTransfer.Valid = eventEntity.Valid;
 
-        return geopointTranfer;
-    }
-
-    private static MetricTransfer MapMetricToTransfer(Metric metric, MetricTransfer metricTransfer)
-    {
-        metricTransfer.MetricId = metric.MetricId;
-        metricTransfer.MetricKey = metric.MetricKey;
-        metricTransfer.MetricValue = metric.MetricValue;
-
-        return metricTransfer;
+        return eventTransfer;
     }
 }

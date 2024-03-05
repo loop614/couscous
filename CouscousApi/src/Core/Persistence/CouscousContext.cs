@@ -1,8 +1,6 @@
 using CouscousApi.ActivityModule.Model;
 using CouscousApi.Core.Transfer;
 using CouscousApi.EventModule.Model;
-using CouscousApi.GeoPointModule.Model;
-using CouscousApi.MetricModule.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace CouscousApi.Core.Persistence;
@@ -10,10 +8,6 @@ namespace CouscousApi.Core.Persistence;
 public class CouscousContext : DbContext
 {
     public DbSet<Activity> Activities { get; set; }
-
-    public DbSet<Geopoint> GeoPoints { get; set; }
-
-    public DbSet<Metric> Metrics { get; set; }
 
     public DbSet<Event> Events { get; set; }
 
