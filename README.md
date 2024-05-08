@@ -4,8 +4,7 @@
 
 ## Notes
 - work in progress
-- try graph databases or ElasticSearch
-- remove limiters in ActivityEntityManager.cs, EventEntityManager.cs
+- use ElasticSearch
 
 ## Requirements
 - docker with compose
@@ -13,12 +12,15 @@
 - Entity Framework Core .NET Command-line Tools 8.0.1
 
 ## Quick Start
-- docker compose up couscous_postgres
+- docker compose up couscous_elasticsearch couscous_postgres
 - cd CouscousApi
-- dotnet ef migrations add First && dotnet ef database update
 - dotnet run
 - [endpoint1](http://localhost:5184/activity/1)
 - [endpoint2](http://localhost:5184/events/activity/1)
+
+## Kibana
+- docker compose up couscous_elasticsearch couscous_kibana
+- [console](http://localhost:5601/app/dev_tools#/console)
 
 ## Frontend
 - cd couscousvue

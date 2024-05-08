@@ -25,17 +25,16 @@ public class EventEntityManager(CouscousContext couscousContext) : CouscousEntit
                 eventCount++;
                 if (eventCount > garminActivityMetrics.activityDetailMetrics.Count) { eventCount = garminActivityMetrics.activityDetailMetrics.Count; }
             }
-            if (eventCount > 50) break;
+            if (eventCount > 50) break; // TODO: remove limiter
         }
 
         couscousContext.SaveChanges();
-        var events = couscousContext.Events.ToList();
         transaction.Commit();
 
-        return events;
+        return couscousContext.Events.ToList();
     }
 
-    private void HydrateEventEntityWithPolyline(Event eventEntity, GarminGeoPoint geoPoint)
+    private static void HydrateEventEntityWithPolyline(Event eventEntity, GarminGeoPoint geoPoint)
     {
         eventEntity.Latitude = geoPoint.lat;
         eventEntity.Longitude = geoPoint.lon;
@@ -54,7 +53,7 @@ public class EventEntityManager(CouscousContext couscousContext) : CouscousEntit
 
     private static Dictionary<string, int> MapMetricKeys(GarminActivityMetric garminActivityMetrics)
     {
-        Dictionary<String, int> metricKeys = new();
+        Dictionary<string, int> metricKeys = new();
 
         for (int i = 0; i < garminActivityMetrics.metricDescriptors.Count; i++)
         {
@@ -64,7 +63,7 @@ public class EventEntityManager(CouscousContext couscousContext) : CouscousEntit
         return metricKeys;
     }
 
-    private static void HydrateEventEntityWithMetrics(Event eventEntity, List<double?> metrics, Dictionary<String, int> metricKeys)
+    private static void HydrateEventEntityWithMetrics(Event eventEntity, List<double?> metrics, Dictionary<string, int> metricKeys)
     {
         eventEntity.DirectRunCadence = metrics[metricKeys["directRunCadence"]];
         eventEntity.DirectFractionalCadence = metrics[metricKeys["directFractionalCadence"]];
