@@ -20,9 +20,9 @@ public class EventRepository(CouscousContext couscousContext) : CouscousReposito
         return MapEventsToTransfer(events, new List<EventTransfer>());
     }
 
-    private static List<EventTransfer> MapEventsToTransfer(List<Event> events, List<EventTransfer> eventsResponseTransfer)
+    private static List<EventTransfer> MapEventsToTransfer(List<Event> events, List<EventTransfer> eventTransfers)
     {
-        if (events.Count == 0) { return eventsResponseTransfer; }
+        if (events.Count == 0) { return eventTransfers; }
         foreach (Event eventEntity in events)
         {
             EventTransfer eventTransfer = new()
@@ -67,9 +67,9 @@ public class EventRepository(CouscousContext couscousContext) : CouscousReposito
                 ExtendedCoordinate = eventEntity.ExtendedCoordinate,
                 Valid = eventEntity.Valid
             };
-            eventsResponseTransfer.Add(eventTransfer);
+            eventTransfers.Add(eventTransfer);
         }
 
-        return eventsResponseTransfer;
+        return eventTransfers;
     }
 }

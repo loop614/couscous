@@ -17,8 +17,11 @@ public class ExampleImporter(IActivityService activityService) : IExampleImporte
             return;
         }
 
-        if (activityService.CountActivities() == 0) {
-            activityService.SaveActivity(garminActivityMetric);
+        if (activityService.CountActivities() > 0) {
+            Console.WriteLine("Activities already there");
+            return;
         }
+
+        activityService.SaveActivity(garminActivityMetric);
     }
 }

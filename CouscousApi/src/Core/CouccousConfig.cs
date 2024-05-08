@@ -1,5 +1,4 @@
 using CouscousApi.ActivityModule;
-using CouscousApi.Core.Domain;
 using CouscousApi.EventModule;
 
 namespace CouscousApi.Core;

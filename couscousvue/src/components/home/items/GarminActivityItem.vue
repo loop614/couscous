@@ -22,13 +22,14 @@
         .then((res: Activity) => {
             console.log(res);
             activityData.value = res;
-            loading.value = false;
             success.value = true;
         })
         .catch((e) => {
             console.log(e)
-            loading.value = false;
             error.value = true;
+        })
+        .finally(() => {
+            loading.value = false;
         });
 
 </script>
@@ -36,5 +37,7 @@
 <template>
     <div v-if="loading">Loading...</div>
     <div v-if="error">Something has gone wrong !</div>
-    <div v-if="success">{{ activityData }}</div>
+    <div v-if="success" style="background-color:#181818">
+        {{ activityData }}
+    </div>
 </template>

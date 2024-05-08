@@ -1,4 +1,3 @@
-version: '3'
 services:
   couscous_api:
     build: ./CouscousApi/.

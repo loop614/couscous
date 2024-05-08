@@ -18,7 +18,7 @@ public class ActivityEntityManager(CouscousContext couscousContext, IEventServic
         return activity;
     }
 
-    private static Activity MapGarminActivityMetricToActivity(Activity activity, GarminActivityMetric garminActivityMetrics)
+    private Activity MapGarminActivityMetricToActivity(Activity activity, GarminActivityMetric garminActivityMetrics)
     {
         activity.ExternalActivityId = garminActivityMetrics.activityId;
         activity.MeasurementCount = garminActivityMetrics.measurementCount;
