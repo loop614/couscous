@@ -8,8 +8,10 @@ type Activity = {
     measurementCount: number;
     metricsCount: number;
     detailsAvailable: boolean;
-    events: any[];
-    // TODO type Event
+    minLat: number;
+    maxLat: number;
+    minLon: number;
+    maxLon: number;
 }
 
 let loading: Ref<boolean> = ref(true);

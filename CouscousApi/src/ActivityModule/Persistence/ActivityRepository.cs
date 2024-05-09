@@ -29,6 +29,10 @@ public class ActivityRepository(CouscousContext couscousContext) : IActivityRepo
         activityTransfer.MeasurementCount = activity.MeasurementCount;
         activityTransfer.MetricsCount = activity.MetricsCount;
         activityTransfer.DetailsAvailable = activity.DetailsAvailable;
+        activityTransfer.MinLat = activity.MinLat;
+        activityTransfer.MinLon = activity.MinLon;
+        activityTransfer.MaxLat = activity.MaxLat;
+        activityTransfer.MaxLon = activity.MaxLon;
 
         return activityTransfer;
     }
