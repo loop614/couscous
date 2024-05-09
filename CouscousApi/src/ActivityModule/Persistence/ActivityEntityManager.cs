@@ -1,12 +1,16 @@
 using CouscousApi.ActivityModule.Model;
 using CouscousApi.Core.Persistence;
 using CouscousApi.DataImport.Transfer;
+using CouscousApi.EventElasticModule;
 using CouscousApi.EventModule;
 
 namespace CouscousApi.ActivityModule.Persistence;
 
-public class ActivityEntityManager(CouscousContext couscousContext, IEventService eventService) : CouscousEntityManager, IActivityEntityManager
-{
+public class ActivityEntityManager(
+    CouscousContext couscousContext,
+    IEventService eventService,
+    IEventElasticService eventElasticService
+) : IActivityEntityManager {
     public Activity SaveActivity(GarminActivityMetric garminActivityMetrics)
     {
         Activity activity = MapGarminActivityMetricToActivity(new Activity(), garminActivityMetrics);
@@ -14,6 +18,7 @@ public class ActivityEntityManager(CouscousContext couscousContext, IEventServic
         couscousContext.SaveChanges();
 
         eventService.SaveEvents(activity, garminActivityMetrics);
+        eventElasticService.SaveEvents(activity, garminActivityMetrics);
 
         return activity;
     }

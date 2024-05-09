@@ -1,7 +1,7 @@
 using CouscousApi.ActivityModule;
-using CouscousApi.Core.Model;
+using CouscousApi.Core.Persistence;
+using CouscousApi.EventElasticModule;
 using CouscousApi.EventModule;
-using Elastic.Clients.Elasticsearch;
 
 namespace CouscousApi.Core;
 
@@ -9,17 +9,15 @@ public static class CouscousConfig
 {
     public static void AddBuilderServices(WebApplicationBuilder builder)
     {
+        AddCoreBuilderServices(builder);
         DataImportConfig.AddBuilderServices(builder);
         ActivityConfig.AddBuilderServices(builder);
+        EventElasticConfig.AddBuilderServices(builder);
         EventConfig.AddBuilderServices(builder);
     }
 
-    public static async Task<int> InitElasticSearchAsync(ElasticSearchSettings settings)
+    private static void AddCoreBuilderServices(WebApplicationBuilder builder)
     {
-        var essettings = new ElasticsearchClientSettings(new Uri(settings.ConnectionUri));
-        var client = new ElasticsearchClient(essettings);
-        var response = await client.Indices.CreateAsync("couscous_events");
-
-        return response.IsSuccess() ? 0 : 1;
+        builder.Services.AddSingleton<CouscousElasticClient>();
     }
 }

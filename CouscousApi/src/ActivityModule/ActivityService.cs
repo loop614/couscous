@@ -1,4 +1,3 @@
-using CouscousApi.Core;
 using CouscousApi.DataImport.Transfer;
 using CouscousApi.ActivityModule.Persistence;
 using CouscousApi.ActivityModule.Model;
@@ -12,7 +11,7 @@ namespace CouscousApi.ActivityModule;
 public class ActivityService(
     IActivityEntityManager activityEntityManager,
     IActivityRepository activityRepository
-    ) : CouscousService, IActivityService
+    ) : IActivityService
 {
     public int CountActivities()
     {

@@ -5,7 +5,7 @@ using CouscousApi.EventModule.Model;
 
 namespace CouscousApi.EventModule.Persistence;
 
-public class EventEntityManager(CouscousContext couscousContext) : CouscousEntityManager, IEventEntityManager
+public class EventEntityManager(CouscousContext couscousContext) : IEventEntityManager
 {
     public List<Event> SaveEvents(Activity activity, GarminActivityMetric garminActivityMetrics)
     {
@@ -16,6 +16,7 @@ public class EventEntityManager(CouscousContext couscousContext) : CouscousEntit
 
         for (int i = 0; i < garminActivityMetrics.geoPolylineDTO.polyline.Count; i++)
         {
+            eventCount = i * polylinesPerMetric;
             for (int j = 0; j < polylinesPerMetric; j++)
             {
                 Event eventEntity = new() { ActivityId = activity.ActivityId };
@@ -23,7 +24,6 @@ public class EventEntityManager(CouscousContext couscousContext) : CouscousEntit
                 HydrateEventEntityWithMetrics(eventEntity, garminActivityMetrics.activityDetailMetrics[eventCount].metrics, metricKeys);
                 couscousContext.Events.Add(eventEntity);
                 eventCount++;
-                if (eventCount > garminActivityMetrics.activityDetailMetrics.Count) { eventCount = garminActivityMetrics.activityDetailMetrics.Count; }
             }
             if (eventCount > 50) break; // TODO: remove limiter
         }

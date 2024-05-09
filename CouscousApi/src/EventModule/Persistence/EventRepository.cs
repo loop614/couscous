@@ -4,7 +4,7 @@ using CouscousApi.EventModule.Model;
 
 namespace CouscousApi.EventModule.Persistence;
 
-public class EventRepository(CouscousContext couscousContext) : CouscousRepository, IEventRepository
+public class EventRepository(CouscousContext couscousContext) : IEventRepository
 {
     public int CountEvents()
     {

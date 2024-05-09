@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CouscousApi.ActivityModule.Persistence;
 
-public class ActivityRepository(CouscousContext couscousContext) : CouscousRepository, IActivityRepository
+public class ActivityRepository(CouscousContext couscousContext) : IActivityRepository
 {
     public int CountActivities()
     {

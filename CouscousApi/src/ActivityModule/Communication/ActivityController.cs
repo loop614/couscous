@@ -6,7 +6,7 @@ namespace CouscousApi.ActivityModule.Controller;
 
 [Route("activity/")]
 [ApiController]
-public class ActivityController(IActivityService activityService) : CoreController
+public class ActivityController(IActivityService activityService)
 {
     [HttpGet("{activity_id}")]
     public ActivityTransfer? GetActivity(int activity_id)

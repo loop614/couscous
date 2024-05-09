@@ -4,7 +4,6 @@
 
 ## Notes
 - work in progress
-- use ElasticSearch
 
 ## Requirements
 - docker with compose
@@ -17,6 +16,7 @@
 - dotnet run
 - [endpoint1](http://localhost:5184/activity/1)
 - [endpoint2](http://localhost:5184/events/activity/1)
+- [endpoint3](http://localhost:5184/events/elastic/activity/1)
 
 ## Kibana
 - docker compose up couscous_elasticsearch couscous_kibana

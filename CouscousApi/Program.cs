@@ -2,7 +2,6 @@ using CouscousApi.Core.Persistence;
 using Microsoft.EntityFrameworkCore;
 using CouscousApi.Core;
 using CouscousApi.Core.Domain;
-using CouscousApi.Core.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers().AddNewtonsoftJson();
@@ -19,21 +18,6 @@ builder.Services.AddCors(options =>
 });
 
 CouscousConfig.AddBuilderServices(builder);
-
-var elasticSearchSettings = builder.Configuration.GetSection("Elastic").Get<ElasticSearchSettings>();
-if (elasticSearchSettings is null)
-{
-    Console.WriteLine("Could not find elasticsearch settings");
-    return;
-}
-
-int elasticInitResult = await CouscousConfig.InitElasticSearchAsync(elasticSearchSettings);
-if (elasticInitResult == 0)
-{
-    Console.WriteLine("Could not init elastic search, make sure the service is running");
-    return;
-}
-
 builder.Services.AddHostedService<CouscousStartupService>();
 
 var app = builder.Build();
@@ -43,6 +27,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     // app.ApplyMigrations();
     app.UseDeveloperExceptionPage();
+}
+var couscousElasticClient = app.Services.GetService<CouscousElasticClient>();
+if (couscousElasticClient is null) {
+    Console.WriteLine("Sadly the elastic client could not construct");
+    return;
+}
+int elasticResponse = await couscousElasticClient.InitElasticSearchAsync();
+if (elasticResponse != 0)
+{
+    Console.WriteLine("Elastic could not init");
 }
 
 app.MapControllers();
