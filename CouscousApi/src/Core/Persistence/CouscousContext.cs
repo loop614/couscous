@@ -1,6 +1,5 @@
 using CouscousApi.ActivityModule.Model;
 using CouscousApi.Core.Transfer;
-using CouscousApi.EventModule.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace CouscousApi.Core.Persistence;
@@ -8,8 +7,6 @@ namespace CouscousApi.Core.Persistence;
 public class CouscousContext : DbContext
 {
     public DbSet<Activity> Activities { get; set; }
-
-    public DbSet<Event> Events { get; set; }
 
     public string DbPath { get; set; }
 
@@ -27,6 +24,5 @@ public class CouscousContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         new ActivityEntityConfiguration().Configure(modelBuilder.Entity<Activity>());
-        new EventEntityConfiguration().Configure(modelBuilder.Entity<Event>());
     }
 }

@@ -28,6 +28,13 @@ if (app.Environment.IsDevelopment())
     // app.ApplyMigrations();
     app.UseDeveloperExceptionPage();
 }
+var couscousElasticClient = app.Services.GetService<CouscousElasticClient>();
+if (couscousElasticClient is null) {
+    Console.WriteLine("Sadly the elastic client could not construct");
+    return;
+}
+int elasticResponse = await couscousElasticClient.InitElasticSearchAsync("couscous_events");
+Console.WriteLine($"Elastic index creation = {elasticResponse}");
 
 app.MapControllers();
 app.UseCors(CouscousAllowSpecificOrigins);

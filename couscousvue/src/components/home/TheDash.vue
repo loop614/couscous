@@ -6,7 +6,6 @@
 <template>
   <WelcomeItem>
     <template #heading>CousCous Garmin File Explorer</template>
-    <template #novel>Here i will show an example of Garmin Smart Watch Data</template>
   </WelcomeItem>
   <GarminActivityItem>
   </GarminActivityItem>

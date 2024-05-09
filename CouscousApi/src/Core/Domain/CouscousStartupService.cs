@@ -2,7 +2,8 @@ using CouscousApi.DataImport;
 
 namespace CouscousApi.Core.Domain;
 
-public class CouscousStartupService(IServiceScopeFactory scopeFactory) : IHostedService {
+public class CouscousStartupService(IServiceScopeFactory scopeFactory) : IHostedService
+{
     public Task StartAsync(CancellationToken cancellationToken)
     {
         using (var scope = scopeFactory.CreateScope())

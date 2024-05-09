@@ -1,13 +1,7 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using CouscousApi.Core.Model;
+namespace CouscousApi.EventElasticModule.Model;
 
-namespace CouscousApi.EventModule.Model;
-
-public class Event : CouscousEntity
+public class EventElastic
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int EventId { get; set; }
-
     public int ActivityId { get; set; }
 
     public double? DirectRunCadence { get; set; }

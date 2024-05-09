@@ -1,10 +1,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using CouscousApi.Core.Model;
-using CouscousApi.EventModule.Model;
 
 namespace CouscousApi.ActivityModule.Model;
 
-public class Activity : CouscousEntity
+public class Activity
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int ActivityId { get; set; }
@@ -19,7 +17,13 @@ public class Activity : CouscousEntity
 
     public bool DetailsAvailable { get; set; }
 
-    public ICollection<Event> Events { get; set; } = [];
+    public double MinLat { get; set; }
+
+    public double MaxLat { get; set; }
+
+    public double MinLon { get; set; }
+
+    public double MaxLon { get; set; }
 }
 
 public enum ActivityTypeEnum
