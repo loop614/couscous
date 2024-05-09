@@ -1,5 +1,4 @@
 using CouscousApi.ActivityModule.Transfer;
-using CouscousApi.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CouscousApi.ActivityModule.Controller;

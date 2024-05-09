@@ -20,11 +20,5 @@ public class ActivityEntityConfiguration : IEntityTypeConfiguration<Activity>
             .HasConversion(
                 v => v.ToString(),
                 v => (ActivityTypeEnum)Enum.Parse(typeof(ActivityTypeEnum), v));
-
-        builder
-            .HasMany(e => e.Events)
-            .WithOne()
-            .HasForeignKey(e => e.ActivityId)
-            .IsRequired(false);
     }
 }

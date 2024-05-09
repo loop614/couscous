@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using CouscousApi.DataImport.Transfer;
 using CouscousApi.EventElasticModule;
+using CouscousApi.EventElasticModule.Model;
 
 namespace CouscousApi.EventModule.Controller;
 
@@ -9,9 +9,9 @@ namespace CouscousApi.EventModule.Controller;
 public class EventElasticController(IEventElasticService eventElasticService)
 {
     [HttpGet("{activity_id}")]
-    public List<EventTransfer> GetEvents(int activity_id)
+    public async Task<List<EventElastic>> GetEvents(int activity_id)
     {
         Console.WriteLine("Getting events from elastic for activity " + activity_id.ToString());
-        return eventElasticService.GetEvents(activity_id);
+        return await eventElasticService.GetEvents(activity_id);
     }
 }

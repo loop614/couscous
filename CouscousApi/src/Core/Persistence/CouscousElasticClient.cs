@@ -5,7 +5,7 @@ namespace CouscousApi.Core.Persistence;
 
 public class CouscousElasticClient
 {
-    private static ElasticsearchClient? client;
+    public ElasticsearchClient? client;
 
     public CouscousElasticClient(IConfiguration config)
     {
@@ -19,9 +19,9 @@ public class CouscousElasticClient
         client = new ElasticsearchClient(essettings);
     }
 
-    public async Task<int> InitElasticSearchAsync()
+    public async Task<int> InitElasticSearchAsync(string indexName)
     {
-        var response = await client!.Indices.CreateAsync("couscous_events");
+        var response = await client!.Indices.CreateAsync(indexName);
 
         return response.IsSuccess() ? 0 : 1;
     }

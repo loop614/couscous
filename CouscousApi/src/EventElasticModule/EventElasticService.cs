@@ -1,5 +1,6 @@
 using CouscousApi.ActivityModule.Model;
 using CouscousApi.DataImport.Transfer;
+using CouscousApi.EventElasticModule.Model;
 using CouscousApi.EventElasticModule.Persistence;
 
 namespace CouscousApi.EventElasticModule;
@@ -14,8 +15,8 @@ public class EventElasticService(
         eventElasticDocumentManager.SaveEvents(activity, garminActivityMetrics);
     }
 
-    public List<EventTransfer> GetEvents(int activityId)
+    public async Task<List<EventElastic>> GetEvents(int activityId)
     {
-        return eventElasticRepository.GetEvents(activityId);
+        return await eventElasticRepository.GetEvents(activityId);
     }
 }

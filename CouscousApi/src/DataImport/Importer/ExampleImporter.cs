@@ -1,4 +1,5 @@
 using CouscousApi.ActivityModule;
+using CouscousApi.Core.Persistence;
 using CouscousApi.DataImport.Transfer;
 using Newtonsoft.Json;
 

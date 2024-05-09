@@ -1,7 +1,6 @@
 using CouscousApi.ActivityModule;
 using CouscousApi.Core.Persistence;
 using CouscousApi.EventElasticModule;
-using CouscousApi.EventModule;
 
 namespace CouscousApi.Core;
 
@@ -13,7 +12,6 @@ public static class CouscousConfig
         DataImportConfig.AddBuilderServices(builder);
         ActivityConfig.AddBuilderServices(builder);
         EventElasticConfig.AddBuilderServices(builder);
-        EventConfig.AddBuilderServices(builder);
     }
 
     private static void AddCoreBuilderServices(WebApplicationBuilder builder)

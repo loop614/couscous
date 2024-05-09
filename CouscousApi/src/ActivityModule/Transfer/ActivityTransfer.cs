@@ -1,5 +1,3 @@
-using CouscousApi.DataImport.Transfer;
-
 namespace CouscousApi.ActivityModule.Transfer;
 
 public class ActivityTransfer
@@ -8,13 +6,11 @@ public class ActivityTransfer
 
     public long ExternalActivityId { get; set; }
 
-    public String ActivityType { get; set; } = null!;
+    public string ActivityType { get; set; } = string.Empty;
 
     public int MeasurementCount { get; set; }
 
     public int MetricsCount { get; set; }
 
     public bool DetailsAvailable { get; set; }
-
-    public ICollection<EventTransfer> Events { get; set; } = [];
 }

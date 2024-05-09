@@ -33,11 +33,8 @@ if (couscousElasticClient is null) {
     Console.WriteLine("Sadly the elastic client could not construct");
     return;
 }
-int elasticResponse = await couscousElasticClient.InitElasticSearchAsync();
-if (elasticResponse != 0)
-{
-    Console.WriteLine("Elastic could not init");
-}
+int elasticResponse = await couscousElasticClient.InitElasticSearchAsync("couscous_events");
+Console.WriteLine($"Elastic index creation = {elasticResponse}");
 
 app.MapControllers();
 app.UseCors(CouscousAllowSpecificOrigins);
